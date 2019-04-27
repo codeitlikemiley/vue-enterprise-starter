@@ -28,7 +28,7 @@ export default {
     <h1>
       <BaseIcon name="user" />
       {{ user.name }}
-      User Profile
+      Profile
     </h1>
     <pre>{{ user }}</pre>
   </Layout>
