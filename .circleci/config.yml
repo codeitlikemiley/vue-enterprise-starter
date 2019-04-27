@@ -1,77 +1,37 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2
-vm_settings:
-  docker:
-    - image: circleci/node:latest-browsers
-  working_directory: ~/app
-install_restore_cache:
-  name: Restore cached dependencies
-  keys:
-    - dependencies-{{ checksum "yarn.lock" }}
-    - dependencies
-install_run:
-  name: Install dependencies with Yarn, purely from the lockfile
-  command: yarn install --frozen-lockfile
-install_save_cache:
-  name: Cache installed dependencies
-  paths:
-    - ~/.cache
-  key: dependencies-{{ checksum "yarn.lock" }}
 jobs:
-  test:
-    docker:
-      - image: circleci/node:latest-browsers
-    working_directory: ~/app
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore cached dependencies
-          keys:
-            - dependencies-{{ checksum "yarn.lock" }}
-            - dependencies
-      - run:
-          name: Install dependencies with Yarn, purely from the lockfile
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Cache installed dependencies
-          paths:
-            - ~/.cache
-          key: dependencies-{{ checksum "yarn.lock" }}
-      - run:
-          name: Run tests
-          command: sudo apt-get install libgconf-2-4 && yarn test:ci
-      - store_artifacts:
-          path: tests/unit/coverage
-      - store_artifacts:
-          path: tests/e2e/videos
-      - store_artifacts:
-          path: tests/e2e/screenshots
   build:
     docker:
-      - image: circleci/node:latest-browsers
-    working_directory: ~/app
+      # specify the version you desire here
+      - image: circleci/node:7.10
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
     steps:
       - checkout
+
+      # Download and cache dependencies
       - restore_cache:
-          name: Restore cached dependencies
           keys:
-            - dependencies-{{ checksum "yarn.lock" }}
-            - dependencies
-      - run:
-          name: Install dependencies with Yarn, purely from the lockfile
-          command: yarn install --frozen-lockfile
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
       - save_cache:
-          name: Cache installed dependencies
           paths:
-            - ~/.cache
-          key: dependencies-{{ checksum "yarn.lock" }}
-      - run:
-          name: Build for production
-          command: yarn build:ci
-      - store_artifacts:
-          path: dist
-workflows:
-  version: 2
-  test_and_deploy:
-    jobs:
-      - test
-      - build
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      - run: yarn test
