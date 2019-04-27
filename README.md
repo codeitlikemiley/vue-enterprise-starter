@@ -1,6 +1,9 @@
 # Vue Enterprise Boilerplate
 
-[![CircleCI](https://circleci.com/gh/chrisvfritz/vue-enterprise-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/chrisvfritz/vue-enterprise-boilerplate/tree/master)
+[![CircleCI](https://circleci.com/gh/codeitlikemiley/vue-enterprise-starter/tree/master.svg?style=svg)](https://circleci.com/gh/codeitlikemiley/vue-enterprise-starter/tree/master)
+
+
+**You diverged from the boilerplate on Apr 27 2019. See [what's been added](https://github.com/chrisvfritz/vue-enterprise-boilerplate/compare/d95c69d63ae86c2e9fc9b798c72c52f6cc0680f2...master) since then.**
 
 > This is an ever-evolving, very opinionated architecture and dev environment for new Vue SPA projects using [Vue CLI 3](https://github.com/vuejs/vue-cli). Questions, feedback, and for now, even bikeshedding are welcome. 😄 If you'd like to increase the time I can spend on this project, as well as other Vue resources, **please consider becoming a [sponsor on Patreon](https://www.patreon.com/chrisvuefritz)**. :pray:
 
